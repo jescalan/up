@@ -1,12 +1,18 @@
 #!/bin/sh
 
+echo "-------------------------------------------------------------";
+echo "Please enter your password, we have to move some files around";
+echo "-------------------------------------------------------------";
+
+sudo echo "perfect!"
+
 echo "-----------------------------";
 echo "Setting up command line prefs";
 echo "-----------------------------";
 
-mv ~/.bash_profile ~/.profile;
-echo "PS1='\[\e[0;31m\]⚡\[\e[m\] \[\e[0;30m\]${PWD##*/}\[\e[39m\] '" >> ~/.profile;
-source ~/.profile;
+mv ~/.bash_profile ~/.bashrc;
+echo "PS1='\[\e[0;31m\]⚡\[\e[m\] \[\e[0;33m\]\${PWD##*/}\[\e[m\] '" >> ~/.bashrc;
+source ~/.bashrc;
 
 echo "-------------------";
 echo "Installing Homebrew";
@@ -48,10 +54,9 @@ echo "-----------------";
 echo "Updating rubygems";
 echo "-----------------";
 
-sudo ruby setup.rb;
-gem update --system;
-touch ~/.gemrc;
-~/.gemrc >> echo "gem: --no-ri --no-rdoc";
+sudo gem update --system;
+sudo touch ~/.gemrc;
+sudo echo "gem: --no-ri --no-rdoc" >> ~/.gemrc;
 
 echo "------------------";
 echo "Installing bundler";

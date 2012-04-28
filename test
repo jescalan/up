@@ -1,2 +1,0 @@
-#!/bin/sh
-test=`which gcc`; [ -z $test ] && echo "you dont have gcc" || echo "you have gcc"
