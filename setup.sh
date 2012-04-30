@@ -55,8 +55,8 @@ echo "Updating rubygems";
 echo "-----------------";
 
 sudo gem update --system;
-sudo touch ~/.gemrc;
-sudo echo "gem: --no-ri --no-rdoc" >> ~/.gemrc;
+touch ~/.gemrc;
+echo "gem: --no-ri --no-rdoc" >> ~/.gemrc;
 
 echo "------------------";
 echo "Installing bundler";
