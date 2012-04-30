@@ -1,5 +1,38 @@
 #!/bin/sh
 
+database=''
+
+while getopts ":d:" opt; do
+  case $opt in
+    d)
+      case $OPTARG in
+        mysql)      database=$OPTARG
+                    ;;
+        postgres)   database=$OPTARG
+                    ;;
+        postgresql)   database=$OPTARG
+                    ;;
+        mongo)      database=$OPTARG
+                    ;;
+        mongodb)      database=$OPTARG
+                    ;;
+        redis)      database=$OPTARG
+                    ;;
+        *)          echo "Invalid Database Option (add a ticket on https://github.com/jenius/up/issues to request others)"
+                    ;;
+      esac
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+    :)
+      echo "Option -$OPTARG requires an argument. (mysql, postgres, redis, or mongo)" >&2
+      exit 1
+      ;;
+  esac
+done
+
 echo "-------------------------------------------------------------";
 echo "Please enter your password, we have to move some files around";
 echo "-------------------------------------------------------------";
@@ -96,6 +129,36 @@ echo "----------------";
 
 sudo gem install rails;
 
-echo ""
+if [ ! -z $database ]; then
+  if [ "$database" == "mysql" ]; then
+    echo "----------------";
+    echo "Installing MySQL";
+    echo "----------------";
+    brew install mysql;
+    unset TMPDIR;
+    mysql_install_db --verbose --user=`whoami` --basedir="$(brew --prefix mysql)" --datadir=/usr/local/var/mysql --tmpdir=/tmp;
+  else if [ "$database" == "mongo" || "$database" == "mongodb" ]; then
+    echo "------------------";
+    echo "Installing MongoDB";
+    echo "------------------";
+    brew install mongodb;
+  else if [ "$database" == "redis" ]; then
+    echo "-------------------";
+    echo "Installing Redis.IO";
+    echo "-------------------";
+    brew install redis;
+  else if [ "$database" == "postegres" || "$database" == "postegresql" ]; then
+    echo "---------------------";
+    echo "Installing PostgreSQL";
+    echo "---------------------";
+    brew install postgresql;
+    initdb /usr/local/var/postgres;
+  else 
+    echo "This shouldn't even be possible!"
+  fi
+fi
+
+echo "----------------------------------------------------"
 echo "Boom! All finished. Everything should be good to go."
-echo ""
+echo "You'll need to scroll up and read the final outputs."
+echo "----------------------------------------------------"
