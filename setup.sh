@@ -158,7 +158,7 @@ if [ ! -z $database ]; then
   fi
 fi
 
-echo "----------------------------------------------------"
+echo "---------------------------------------------------------------------"
 echo "Boom! All finished. Everything should be good to go."
-echo "You'll need to scroll up and read the final outputs."
-echo "----------------------------------------------------"
+echo "If you installed a database, scroll up and make sure everything is ok"
+echo "---------------------------------------------------------------------"
