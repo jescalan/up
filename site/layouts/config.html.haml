@@ -1,0 +1,66 @@
+%meta{ :charset => 'utf8' }
+%meta{ 'http-equiv' => 'X-UA-Compatible', :content => 'IE=edge, chrome=1' }
+
+-# -----------------------------------------------------
+-#  CONFIGURATION: This is important stuff, do it first!
+-# -----------------------------------------------------
+
+- title = "Your page title here"
+- author = "Your name or company name"
+- description = "Short description of your site"
+- url = "http://example.com"
+- preview_image = "img/preview.png" # 75x75 square. if you really can't, pass false
+
+- favicons = true # see section below for size details
+- facebook_tags = true
+- mobile_site = true
+- ie_app = true
+- icons = false # not finished yet
+
+-# -----------------------------------------------------
+
+%title= title
+%meta{ :name => 'description', :content => "#{description}" }
+%meta{ :name => 'author', :content => "#{author}"  }
+
+-# The main stylesheet url
+%link{ :rel => 'stylesheet', :href => 'css/main.css'}
+
+- if icons
+  %link{ rel: 'stylesheet', href: 'css/fonts/roots-icons.css' }
+
+- if favicons
+  -# 16x16, .ico
+  %link{ :rel => "shortcut icon", :href => "images/favicon.ico" }
+  -# 57x57, .png
+  %link{ :rel => "apple-touch-icon", :href => "images/apple-touch-icon.png" }
+  -# 72x72, .png
+  %link{ :rel => "apple-touch-icon", :sizes => "72x72", :href => "images/apple-touch-icon-72x72.png" }
+  -# 114x114, .png
+  %link{ :rel => "apple-touch-icon", :sizes => "114x114", :href => "images/apple-touch-icon-114x114.png" }
+
+- if facebook_tags
+  %meta{ property: 'og:title', content: "#{title}"}
+  %meta{ property: 'og:description', content: "#{description}"}
+  %meta{ property: 'og:image', content: "#{preview_image}"}
+  %meta{ property: 'og:url', content: "#{url}" }
+  -# more than just a website? Docs @ http://developers.facebook.com/docs/opengraph/objects/builtin/
+  %meta{ property: 'og:type', content: 'website' }
+
+- if mobile_site
+  %meta{ :name => 'viewport', :content => 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' }
+
+- if ie_app
+  -# You can get more detailed with this if you want. Docs @ http://msdn.microsoft.com/en-us/library/gg131029.aspx
+  %meta{ name: "application-name", content: "#{title}" }
+  %meta{ name: "msapplication-starturl", content: "#{url}" }
+  -# by all means, change this color
+  %meta{ name: "msapplication-navbutton-color", content: "#E88F4E" }
+
+-# ---------------------------------------------------------------------------
+-#  Any other stuff you need in the head goes here! (fonts, stylesheets, etc.)
+-# ---------------------------------------------------------------------------
+-# NOTE: Script loads are blocking. It's recommended to load javascript at the bottom
+-# of the page unless it's something like a webfont.
+
+%link{ href: 'http://fonts.googleapis.com/css?family=Gudea:400,700', rel: 'stylesheet' }

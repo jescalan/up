@@ -30,3 +30,7 @@ A set of shell scripts to painlessly set up a modern ruby environment on your co
 - [coffeescript](http://jashkenas.github.com/coffee-script/)
 - [stasis](http://stasis.me/)
 - [rails](http://rubyonrails.org/)
+
+### Contributors
+
+I'd like to give a huge thank you to @idPro for his awesome contributions to this project. I'm always happy to look at contributions from anyone else, ust get in contact or send in a pull request!

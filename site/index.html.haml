@@ -1,0 +1,29 @@
+%h1 Setting up your computer
+
+#screen1
+  %p Do you have gcc or xcode installed?
+  %small not sure? open terminal and paste in this line:
+  %small
+    %strong curl http://up.jenius.me/test | sh
+
+  .buttons
+    .button.yes yes
+    .button.no no
+
+#screen-yes
+  %p Awesome! Paste this into terminal to set up your computer.
+  %code curl http://up.jenius.me/setup | sh
+
+  .button.done.n1 done!
+
+#screen-no
+  %p Ok - paste this into terminal to install gcc
+  %code curl http://up.jenius.me/gcc | sh
+
+  %p Then paste this to set up your computer!
+  %code curl http://up.jenius.me/setup | sh
+
+  .button.done.n2 done!
+
+#screen-done
+  %p Great job, you're a champion.

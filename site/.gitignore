@@ -1,0 +1,28 @@
+# Big props to the html5 boilerplate for most of this
+
+*.diff
+*.err
+*.orig
+*.log
+*.rej
+*.swo
+*.swp
+*.vi
+*~
+.sass-cache
+.DS_Store
+Thumbs.db
+.cache
+.project
+.settings
+.tmproj
+*.esproj
+nbproject
+*.sublime-project
+*.sublime-workspace
+.powder
+
+# Gemfile.lock
+
+# If you are deploying to heroku, you MUST comment out or remove the line below
+public/

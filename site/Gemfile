@@ -1,0 +1,7 @@
+source "http://rubygems.org"
+gem 'sass', :git => 'git://github.com/nex3/sass.git'
+gem 'haml'
+gem 'coffee-script'
+gem 'stasis'
+gem 'rdiscount'
+gem 'heroku'

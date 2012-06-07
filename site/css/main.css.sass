@@ -1,0 +1,83 @@
+@import 'roots'
+
++normalize // Resets page styles
++base
++text-selection
+
+// ---------------------------------------------
+// CSS for the intro page. By all means delete
+// ---------------------------------------------
+
+body
+  background: #fff url(../img/noise.png)
+
+#screen-yes, #screen-no, #screen-done
+  display: none
+
+h1
+  text-align: center
+  color: #D8D8D8
+  +upcase
+  +bold
+  margin-bottom: 60px
+
+p
+  +p(35)
+  text-align: center
+  margin-bottom: 10px
+
+small
+  text-align: center
+  display: block
+  color: #9D9D9D
+  +p(13)
+  margin: 0
+
+  strong
+    font-family: Monaco, monospace
+    font-size: 10px
+
+code
+  color: #9D9D9D
+  font-family: Monaco, monospace
+  text-align: center
+  font-size: 22px
+  display: block
+  margin-bottom: 40px
+
+.buttons
+  width: 336px
+  margin: 0 auto
+  margin-top: 50px
+
+.button
+  +p(45)
+  margin: 0
+  padding: 0 50px
+  +round(5px)
+  color: #fff
+  +bold
+  +inline-block
+  +transition
+  cursor: pointer
+
+  &.yes
+    background: #5DDC8F
+    margin-right: 20px
+
+    &:hover
+      background: darken(#5DDC8F, 10%)
+      +box-shadow(0 0 10px darken(#5DDC8F, 10%))
+  
+  &.no
+    background: #D6545B
+
+    &:hover
+      background: darken(#D6545B, 10%)
+      +box-shadow(0 0 10px darken(#D6545B, 10%))
+  
+.done
+  @extend .yes
+  width: 110px
+  margin: 0 auto !important
+  display: block

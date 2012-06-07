@@ -1,0 +1,32 @@
+!!! 5
+= roots_badge # feel free to get rid of this, just a little swag
+%head
+  = render 'layouts/config.html.haml'
+
+  -# JS resources - not yet ready
+  -# resources = %w[ modal tooltip tabs alerts selection slider scrollspy imgfade spinner ]
+
+-# ------------------------------------------------------------------------------------------
+
+%body
+  = yield
+
+-# ------------------------------------------------------------------------------------------
+
+/ jquery & fallback
+%script{ src: "http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" }
+:javascript
+  window.jQuery || document.write('<script src="vendor/jquery-1.7.1.min.js"><\/script>')
+
+-# project resources - not yet ready
+-# resources.each do |r|
+  -# %script{ src: "script/#{r}.js" }
+
+-# help IE out with advanced selectors (http://selectivizr.com/)
+/[if (gte IE6)&(lte IE8)]
+  %script{ src: "vendor/selectivizr.js" }
+
+/ custom
+%script{ src: "script/main.js" }
+      
+    
