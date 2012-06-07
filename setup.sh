@@ -129,6 +129,22 @@ echo "----------------";
 
 sudo gem install rails;
 
+echo "------------------";
+echo "Installing Node.js";
+echo "------------------";
+if ask "Do you want to install Node.js?"; then
+  brew install node
+  
+  if ask "Do you want to install NPM?"; then
+    curl http://npmjs.org/install.sh | sh
+  fi
+
+  if ask "Do you want to install ender?"; then
+    npm install ender -g
+  fi
+fi
+
+
 if [ ! -z $database ]; then
   if [ "$database" == "mysql" ]; then
     echo "----------------";
