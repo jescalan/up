@@ -12,9 +12,9 @@ To get the project running:
   - make sure you have the latest version of ruby and pow installed
   - cd into the project folder
   - run `bundle`
-  - run `powder link PROJECT-NAME`
+  - run `powder link up`
   - run `powder open`
-  - run `stasis -d`, then refresh the browser tab
+  - run `stasis -d`, then refresh the browser tab (should be http://up.dev)
 
 ### Staging
 
