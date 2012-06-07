@@ -88,8 +88,8 @@ echo "Updating rubygems";
 echo "-----------------";
 
 sudo gem update --system;
-sudo touch ~/.gemrc;
-sudo echo "gem: --no-ri --no-rdoc" >> ~/.gemrc;
+touch ~/.gemrc;
+echo "gem: --no-ri --no-rdoc" >> ~/.gemrc;
 
 echo "------------------";
 echo "Installing bundler";
@@ -137,28 +137,64 @@ if [ ! -z $database ]; then
     brew install mysql;
     unset TMPDIR;
     mysql_install_db --verbose --user=`whoami` --basedir="$(brew --prefix mysql)" --datadir=/usr/local/var/mysql --tmpdir=/tmp;
+
+    if ask "Do you want to create launch agents for MySQL?" Y; then
+      mkdir -p ~/Library/LaunchAgents
+      # hopefully the plist name doesn't change
+      find /usr/local/Cellar/mysql/ -name "homebrew.mxcl.mysql.plist" -exec cp {} ~/Library/LaunchAgents/ \;
+      launchctl load -w ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist
+    fi
+    echo "Note: $ mysql.server {start,stop,restart}"
+
+
   else if [ "$database" == "mongo" || "$database" == "mongodb" ]; then
     echo "------------------";
     echo "Installing MongoDB";
     echo "------------------";
     brew install mongodb;
+
+    if ask "Do you want to create the default db path?" Y; then
+      sudo mkdir -p /data/db/
+      sudo chown `id -u` /data/db
+    fi
+
+
   else if [ "$database" == "redis" ]; then
     echo "-------------------";
     echo "Installing Redis.IO";
     echo "-------------------";
     brew install redis;
+
+    if ask "Do you want to create launch agents for redis?" Y; then
+      mkdir -p ~/Library/LaunchAgents
+      find /usr/local/Cellar/redis/ -name "homebrew.mxcl.redis.plist" -exec cp {} ~/Library/LaunchAgents/ \;
+      launchctl load -w ~/Library/LaunchAgents/homebrew.mxcl.redis.plist
+    fi
+
+
   else if [ "$database" == "postegres" || "$database" == "postegresql" ]; then
     echo "---------------------";
     echo "Installing PostgreSQL";
     echo "---------------------";
     brew install postgresql;
-    initdb /usr/local/var/postgres;
+
+    if ask "Is this your first install of Postgres?" Y; then
+      initdb /usr/local/var/postgres;
+    fi
+
+    if ask "Do you want to create launch agents for Postgres?" Y; then
+      mkdir -p ~/Library/LaunchAgents
+      # hopefully the plist name doesn't change
+      find /usr/local/Cellar/postgresql/ -name "homebrew.mxcl.postgresql.plist" -exec cp {} ~/Library/LaunchAgents/ \;
+      launchctl load -w ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
+    fi
+
+
   else 
     echo "This shouldn't even be possible!"
   fi
 fi
 
-echo "----------------------------------------------------"
+echo "---------------------------------------------------------------------"
 echo "Boom! All finished. Everything should be good to go."
-echo "You'll need to scroll up and read the final outputs."
-echo "----------------------------------------------------"
+echo "---------------------------------------------------------------------"

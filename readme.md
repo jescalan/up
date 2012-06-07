@@ -2,10 +2,12 @@
 
 A set of shell scripts to painlessly set up a modern ruby environment on your computer. Can be found at [http://up.jenius.me](http://up.jenius.me)
 
+**Warning: The GCC installer bundled with up works with Lion only. [Click here to download a snow leopard version](https://github.com/downloads/kennethreitz/osx-gcc-installer/GCC-10.6.pkg).**
+
 - `test` checks whether gcc is installed and tells you if it is or not
 - `gcc` downloads the apple gcc installer from my server so that you don't have to log in with an apple ID and all those shenanigans, then mounts the disk and opens the installer
 - `setup` installs the packages listed below.
-  - to have database install as well, please use the `-d` flag ex: `./setup.sh -d mysql`
+  - to have database install as well, use the `-d` flag *ex: `./setup.sh -d mysql`*
     - **Currently available options**
     - [mysql](http://www.mysql.com/)
     - [redis](http://redis.io/)
