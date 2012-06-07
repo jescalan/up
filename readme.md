@@ -7,12 +7,6 @@ A set of shell scripts to painlessly set up a modern ruby environment on your co
 - `test` checks whether gcc is installed and tells you if it is or not
 - `gcc` downloads the apple gcc installer from my server so that you don't have to log in with an apple ID and all those shenanigans, then mounts the disk and opens the installer
 - `setup` installs the packages listed below.
-  - to have database install as well, use the `-d` flag *ex: `./setup.sh -d mysql`*
-    - **Currently available options**
-    - [mysql](http://www.mysql.com/)
-    - [redis](http://redis.io/)
-    - [mongo](http://www.mongodb.org/)
-    - [postgres](http://www.postgresql.org/)
 
 ### What it installs
 
@@ -30,3 +24,8 @@ A set of shell scripts to painlessly set up a modern ruby environment on your co
 - [coffeescript](http://jashkenas.github.com/coffee-script/)
 - [stasis](http://stasis.me/)
 - [rails](http://rubyonrails.org/)
+- _Optionally these databases are available to install as well._
+  - [mysql](http://www.mysql.com/)
+  - [redis](http://redis.io/)
+  - [mongo](http://www.mongodb.org/)
+  - [postgres](http://www.postgresql.org/)
