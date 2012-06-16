@@ -1,37 +1,35 @@
 #!/bin/sh
 
-database=''
+function ask {
+  while true; do
+ 
+    if [ "${2:-}" = "Y" ]; then
+      prompt="Y/n"
+      default=Y
+    elif [ "${2:-}" = "N" ]; then
+      prompt="y/N"
+      default=N
+    else
+      prompt="y/n"
+      default=
+    fi
+ 
+    # Ask the question
+    read -p "$1 [$prompt] " REPLY
 
-while getopts ":d:" opt; do
-  case $opt in
-    d)
-      case $OPTARG in
-        mysql)      database=$OPTARG
-                    ;;
-        postgres)   database=$OPTARG
-                    ;;
-        postgresql)   database=$OPTARG
-                    ;;
-        mongo)      database=$OPTARG
-                    ;;
-        mongodb)      database=$OPTARG
-                    ;;
-        redis)      database=$OPTARG
-                    ;;
-        *)          echo "Invalid Database Option (add a ticket on https://github.com/jenius/up/issues to request others)"
-                    ;;
-      esac
-      ;;
-    \?)
-      echo "Invalid option: -$OPTARG" >&2
-      exit 1
-      ;;
-    :)
-      echo "Option -$OPTARG requires an argument. (mysql, postgres, redis, or mongo)" >&2
-      exit 1
-      ;;
-  esac
-done
+    # Default?
+    if [ -z "$REPLY" ]; then
+      REPLY=$default
+    fi
+ 
+    # Check if the reply is valid
+    case "$REPLY" in
+      Y*|y*) return 0 ;;
+      N*|n*) return 1 ;;
+    esac
+ 
+  done
+}
 
 echo "-------------------------------------------------------------";
 echo "Please enter your password, we have to move some files around";
@@ -129,36 +127,91 @@ echo "----------------";
 
 sudo gem install rails;
 
-if [ ! -z $database ]; then
-  if [ "$database" == "mysql" ]; then
+echo "------------------";
+echo "Installing Node.js";
+echo "------------------";
+if ask "Do you want to install Node.js?"; then
+  brew install node
+  
+  if ask "Do you want to install NPM?"; then
+    curl http://npmjs.org/install.sh | sh
+  fi
+
+  if ask "Do you want to install ender?"; then
+    npm install ender -g
+  fi
+fi
+
+
+echo "----------------";
+echo "Database Options";
+echo "----------------";
+
+if ask "Would you like to install databases? (optional)" N; then
+
+  if ask "Do you want to install MySQL?" Y; then
     echo "----------------";
     echo "Installing MySQL";
     echo "----------------";
+
     brew install mysql;
     unset TMPDIR;
     mysql_install_db --verbose --user=`whoami` --basedir="$(brew --prefix mysql)" --datadir=/usr/local/var/mysql --tmpdir=/tmp;
-  else if [ "$database" == "mongo" || "$database" == "mongodb" ]; then
+
+    if ask "Do you want to create launch agents for MySQL?" Y; then
+      mkdir -p ~/Library/LaunchAgents
+      # hopefully the plist name doesn't change
+      find /usr/local/Cellar/mysql/ -name "homebrew.mxcl.mysql.plist" -exec cp {} ~/Library/LaunchAgents/ \;
+      launchctl load -w ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist
+    fi
+    echo "Note: $ mysql.server {start,stop,restart}"
+  fi
+
+  if ask "Do you want to install MongoDB?" Y; then
     echo "------------------";
     echo "Installing MongoDB";
     echo "------------------";
     brew install mongodb;
-  else if [ "$database" == "redis" ]; then
+
+    if ask "Do you want to create the default db path?" Y; then
+      sudo mkdir -p /data/db/
+      sudo chown `id -u` /data/db
+    fi  
+  fi
+
+  if ask "Do you want to install Redis.IO?" Y; then
     echo "-------------------";
     echo "Installing Redis.IO";
     echo "-------------------";
     brew install redis;
-  else if [ "$database" == "postegres" || "$database" == "postegresql" ]; then
+
+    if ask "Do you want to create launch agents for redis?" Y; then
+      mkdir -p ~/Library/LaunchAgents
+      find /usr/local/Cellar/redis/ -name "homebrew.mxcl.redis.plist" -exec cp {} ~/Library/LaunchAgents/ \;
+      launchctl load -w ~/Library/LaunchAgents/homebrew.mxcl.redis.plist
+    fi
+  fi
+
+  if ask "Do you want to install PostegreSQL?" Y; then
     echo "---------------------";
     echo "Installing PostgreSQL";
     echo "---------------------";
     brew install postgresql;
-    initdb /usr/local/var/postgres;
-  else 
-    echo "This shouldn't even be possible!"
+
+    if ask "Is this your first install of Postgres?" Y; then
+      initdb /usr/local/var/postgres;
+    fi
+
+    if ask "Do you want to create launch agents for Postgres?" Y; then
+      mkdir -p ~/Library/LaunchAgents
+      # hopefully the plist name doesn't change
+      find /usr/local/Cellar/postgresql/ -name "homebrew.mxcl.postgresql.plist" -exec cp {} ~/Library/LaunchAgents/ \;
+      launchctl load -w ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
+    fi
   fi
+
 fi
 
 echo "---------------------------------------------------------------------"
 echo "Boom! All finished. Everything should be good to go."
-echo "If you installed a database, scroll up and make sure everything is ok"
 echo "---------------------------------------------------------------------"
