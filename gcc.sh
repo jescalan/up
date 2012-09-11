@@ -11,6 +11,9 @@
 # OSX GCC Installer by Kenneth Reitz
 # (https://github.com/kennethreitz/osx-gcc-installer/)
 
+# Update: Newer ruby versions apparently support apple command line tools
+# this will be swapped over shortly
+
 cd ~/Desktop;
 curl -O http://up.jenius.me/gcc-installer.pkg
 open ~/Desktop/gcc-installer.pkg
