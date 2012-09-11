@@ -46,7 +46,8 @@ echo "-------------------------------------------------------------";
 echo "Please enter your password, we have to move some files around";
 echo "-------------------------------------------------------------";
 
-sudo echo "perfect!"
+sudo -v
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 echo "-----------------------------";
 echo "Setting up command line prefs";
